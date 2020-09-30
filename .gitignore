@@ -1,2 +1,7 @@
-
+.vscode
 .DS_Store
+
+# for python
+__pycache__
+*.pyc
+.ipynb_checkpoints
