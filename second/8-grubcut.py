@@ -1,16 +1,18 @@
 # ライブラリのインポート
 import copy
-
 import cv2
 import numpy as np
 
 # アプリ用のスタジアム、ボール画像を読みこみ
 ball_img = cv2.imread("./image_data/ball.png")
 stadium_img = cv2.imread("./image_data/stadium.png")
+
 # 適当な大きさにスタジアムをリサイズ
 stadium_img = cv2.resize(stadium_img, (1200, 700))
+
 # ボールの高さ、幅
 ball_h, ball_w = ball_img.shape[0], ball_img.shape[1]
+
 # ボールの中心座標をスタジアムの中心に設定
 idx_h = stadium_img.shape[0] // 2
 idx_w = stadium_img.shape[1] // 2
@@ -35,6 +37,7 @@ fgdModel = np.zeros((1, 65), np.float64)
 
 # grubcutの実行
 cv2.grabCut(ball_img, ball_mask, cut_rect, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_RECT)
+
 """
 [grubcutの実行結果について]
 ball_maskでは各画素が0~3で分類される。
@@ -49,6 +52,7 @@ ball_maskでは各画素が0~3で分類される。
 
 # maskを用意
 mask = np.where((ball_mask == 2) | (ball_mask == 0), 0, 1).astype("uint8")
+
 # maskを元に、ボールについて表示する部分と表示しない（スタジアムのままの）部分を反映させる
 # newball_img は合成画像用の変数
 newball_img = np.zeros((ball_h, ball_w, 3), dtype="uint8")
@@ -64,6 +68,7 @@ for y in range(0, ball_h):
 
 # ボールをスタジアムに配置
 with_grubcut = copy.deepcopy(stadium_img)
+
 # (注意!)今回ボールの大きさが H:198、W:200と両方偶数のためこれで良いが、奇数の場合は工夫が必要
 with_grubcut[
     (idx_h - ball_h // 2) : (idx_h + ball_h // 2),

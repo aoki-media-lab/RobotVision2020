@@ -1,6 +1,5 @@
 # ライブラリのインポート
 import copy
-
 import cv2
 import numpy as np
 
@@ -9,9 +8,9 @@ cap = cv2.VideoCapture(0)
 
 # Shi-Tomasiのコーナー検出パラメータ
 feature_params = dict(
-    maxCorners=100,  # 保持するコーナー数, int
-    qualityLevel=0.3,  # 最良値(最大固有値の割合?), double
-    minDistance=7,  # この距離内のコーナーを棄却, double
+    maxCorners=100,  # 保持するコーナー数, int型
+    qualityLevel=0.3,  # 最良値(最大固有値の割合?), float型
+    minDistance=7,  # この距離内のコーナーを棄却, float型
     blockSize=7,
 )  # 使用する近傍領域のサイズ, int
 
@@ -29,14 +28,18 @@ color = np.random.randint(0, 255, (100, 3))
 ret, frame = cap.read()
 ball_img = cv2.imread("./image_data/ball.png")
 stadium_img = cv2.imread("./image_data/stadium.png")
+
 # Webカメラの画面の大きさにスタジアムを合わせる
 stadium_img = cv2.resize(stadium_img, (frame.shape[1], frame.shape[0]))
+
 # ボールの高さ、幅の[半分](半分だから注意！！)
 # (注意!)今回ボールの大きさが H:198、W:200と両方偶数のためこれで良いが、奇数の場合は工夫が必要
 ball_h, ball_w = ball_img.shape[0] // 2, ball_img.shape[1] // 2
+
 # ボールの初期位置（中心座標)をスタジアムの中心に設定
 idx_h = stadium_img.shape[0] // 2
 idx_w = stadium_img.shape[1] // 2
+
 # はじめボールは中央に配置
 stadium = copy.deepcopy(stadium_img)
 stadium[
@@ -63,6 +66,7 @@ while True:
     else:
         # グレースケールに変換
         gray_next = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
         # オプティカルフロー検出
         feature_next, status, err = cv2.calcOpticalFlowPyrLK(
             gray_first, gray_next, feature_first, None, **lk_params
@@ -76,19 +80,25 @@ while True:
         x_difs = 0
         y_difs = 0
         for i, (next_point, first_point) in enumerate(zip(good_next, good_first)):
+
             # 前フレームの座標獲得
             first_x, first_y = first_point.ravel()
+
             # 後フレームの座標獲得
             next_x, next_y = next_point.ravel()
+
             # 前後フレームのx, y方向の移動成分を加える
             x_difs += next_x - first_x
             y_difs += next_y - first_y
+
             # 前フレームと後フレームを繋ぐ線を描画
             flow_mask = cv2.line(
                 flow_mask, (next_x, next_y), (first_x, first_y), color[i].tolist(), 2
             )
+
             # 現在の特徴点のところに丸（大きな点）を描画
             frame = cv2.circle(frame, (next_x, next_y), 5, color[i].tolist(), -1)
+            
         output = cv2.add(frame, flow_mask)
 
         """
@@ -128,6 +138,7 @@ while True:
             idx_w = ball_w
         elif idx_w >= stadium_img.shape[1] - ball_w:
             idx_w = stadium_img.shape[1] - ball_w - 1
+
         # ボールの再配置
         stadium = copy.deepcopy(stadium_img)
         stadium[

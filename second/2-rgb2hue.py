@@ -7,6 +7,7 @@ cap = cv2.VideoCapture(0)
 # 実行
 while True:
 
+　　 #Webカメラのフレーム取得
     ret, frame = cap.read()
     cv2.imshow("camera", frame)
 
@@ -15,7 +16,7 @@ while True:
 
     # HSVによる上限、下限の設定　 ([Hue, Saturation, Value])
     hsvLower = np.array([0, 0, 0])  # 下限
-    hsvUpper = np.array([30, 150, 150])  # 上限
+    hsvUpper = np.array([150, 150, 150])  # 上限
 
     # HSVからマスクを作成
     hsv_mask = cv2.inRange(hsv, hsvLower, hsvUpper)

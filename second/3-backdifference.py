@@ -3,12 +3,15 @@ import cv2
 import numpy as np
 
 cap = cv2.VideoCapture(0)
-# スクショしたかどうかを保存する関数 (まだ撮っていないのでFalse)
+# スクショしたかどうかを保存する変数 (まだ撮っていないのでFalse)
 screenshot = False
+# スクショを保存する変数
+photo = None
 
 # 実行
 while True:
-
+     
+    #Webカメラのフレーム取得
     ret, frame = cap.read()
     cv2.imshow("camera", frame)
 
