@@ -2,21 +2,6 @@
 
 授業スライドは以下のGoogleスライド参照
 
-- [Googleスライド](https://docs.google.com/presentation/d/1uQLFX-_HAIQ3dOmPT9cF2OmMBKuNnNJvYxoYrJgEeIA/edit#slide=id.p)
-
-## Formatting
-
-blackとisortを使ってコードを整形してからコミットするようにする
-
-### Installation
-
-```bash
-pip install black isort
-```
-
-### Formatting
-
-```bash
-black .
-isort -rc .
-```
+- [1週目スライド](https://docs.google.com/presentation/d/1zC332jjPf6Ts08ZGm7fL_vqKd8VCcwiCL1_aqFU0mqw/edit?usp=sharing)
+- [2週目スライド]()
+- [3週目スライド]()
