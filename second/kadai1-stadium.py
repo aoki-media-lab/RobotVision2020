@@ -41,22 +41,6 @@ while True:
     if k == ord("q"):
         break
     
-    # ボールを動かすキーボード操作を記述
-    elif k == ord("w"):
-        idx_h = idx_h - 10
-        print("↑")
-
-    elif k == ord("s"):
-        idx_h = idx_h + 10
-        print("↓")
-
-    elif k == ord("a"):
-        idx_w = idx_w - 10
-        print("←")
-
-    elif k == ord("d"):
-        idx_w = idx_w + 10
-        print("→")
 
 
 cap.release()
