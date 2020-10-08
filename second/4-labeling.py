@@ -7,7 +7,7 @@ cap = cv2.VideoCapture(0)
 # 実行
 while True:
 
-    #Webカメラのフレーム取得
+    # Webカメラのフレーム取得
     ret, frame = cap.read()
     cv2.imshow("camera", frame)
 

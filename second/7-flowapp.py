@@ -98,7 +98,7 @@ while True:
 
             # 現在の特徴点のところに丸（大きな点）を描画
             frame = cv2.circle(frame, (next_x, next_y), 5, color[i].tolist(), -1)
-            
+
         output = cv2.add(frame, flow_mask)
 
         """

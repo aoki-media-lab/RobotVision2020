@@ -31,7 +31,7 @@ stadium[
 # 実行
 while True:
 
-    #Webカメラのフレーム取得
+    # Webカメラのフレーム取得
     ret, frame = cap.read()
     cv2.imshow("camera", frame)
 
@@ -116,7 +116,7 @@ while True:
         idx_w = ball_w
     elif idx_w >= stadium_img.shape[1] - ball_w:
         idx_w = stadium_img.shape[1] - ball_w - 1
-        
+
     # ボールの再配置
     stadium = copy.deepcopy(stadium_img)
     stadium[

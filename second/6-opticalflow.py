@@ -42,22 +42,20 @@ first_flag, first = cap.read()
 
 # グレースケールに変換
 gray_first = cv2.cvtColor(first, cv2.COLOR_BGR2GRAY)
-feature_first = cv2.goodFeaturesToTrack(
-    gray_first, mask=None, **feature_params
-) 
+feature_first = cv2.goodFeaturesToTrack(gray_first, mask=None, **feature_params)
 
 # フロー書き出し用の画像作成
-flow_mask = np.zeros_like(first)  
+flow_mask = np.zeros_like(first)
 
 """
 ２枚目以降の処理
 """
 while True:
 
-    #動画のフレーム取得
+    # 動画のフレーム取得
     ret, frame = cap.read()
 
-    #動画のフレームが無くなったら強制終了
+    # 動画のフレームが無くなったら強制終了
     if not ret:
         break
 
@@ -90,7 +88,7 @@ while True:
 
         # 現在の特徴点のところに丸（大きな点）を描画
         frame = cv2.circle(frame, (next_x, next_y), 5, color[i].tolist(), -1)
-        
+
     output = cv2.add(frame, flow_mask)
 
     # ウィンドウに結果を表示

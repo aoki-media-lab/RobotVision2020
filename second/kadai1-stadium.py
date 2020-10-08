@@ -35,12 +35,10 @@ while True:
     # 結果画像の表示
     cv2.imshow("output", stadium_copy)
 
-
     # 終了オプション
     k = cv2.waitKey(1)
     if k == ord("q"):
         break
-    
 
 
 cap.release()

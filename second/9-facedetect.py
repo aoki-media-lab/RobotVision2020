@@ -39,7 +39,7 @@ while True:
         cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
         face = img[y : y + h, x : x + w]
         face_gray = gray[y : y + h, x : x + w]
-        
+
         # 瞳検知・外接短形を描画
         eyes = eye_cascade.detectMultiScale(face_gray)
         for (ex, ey, ew, eh) in eyes:
