@@ -1,8 +1,8 @@
 # ライブラリのインポート
 import copy
+
 import cv2
 import numpy as np
-
 
 # アプリ用のスタジアム、ボール画像を読みこみ
 ball_img = cv2.imread("./image_data/ball.png")

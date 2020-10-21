@@ -20,8 +20,11 @@ photo = None
 # ノイズ除去のためのカーネルの定義
 kernel = np.ones((5, 5), np.uint8)
 
-# クラス名
-class_name = "background"
+# 画面に表示する文字列
+display_str = "Please save the background screenshot."
+
+# クラス名とIDの組み合わせ
+class_name = None
 LABEL2CLS = {0: "background", 1: "A", 2: "B"}
 
 # 実行
@@ -33,8 +36,11 @@ while True:
 
     # 今映っている人のクラスを表示
     # putText(描画画像、 書き込む文字列、 書き込む座標、 フォント、 サイズ、 色、 太さ)
+    if class_name is not None:
+        display_str = f"class: {class_name}"
+
     cv2.putText(
-        src, f"class: {class_name}", (30, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 0), 1,
+        src, display_str, (30, 30), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 0), 1,
     )
 
     cv2.imshow("camera", src)
@@ -85,6 +91,7 @@ while True:
         # 最近傍探索. 二重のリストで結果が返ってくる.
         distances, indices = model.kneighbors(feat)
 
+        # 近かった特徴量のインデックス(indicies)をクラスのラベルに変換
         label = labels[indices[0][0]]
         class_name = LABEL2CLS[label]
 
