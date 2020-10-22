@@ -59,70 +59,72 @@ while True:
     # ラベリング処理
     nlabels, labels, stats, centroids = cv2.connectedComponentsWithStats(blur_mask)
 
-    # 面積でソート、　今回は最も大きい領域１つだけ利用
-    idx = stats[:, 4].argsort()[-2]
+    # 領域(stats[:, 4])が２つ以上ある場合(そのうち1つは背景)だけ処理
+    if len(stats[:, 4]) >= 2:
+        # 面積でソート、　今回は最も大きい領域１つだけ利用
+        idx = stats[:, 4].argsort()[-2]
 
-    # 領域の外接矩形の角座標を入手
-    x0 = stats[idx, 0]
-    y0 = stats[idx, 1]
-    x1 = x0 + stats[idx, 2]
-    y1 = y0 + stats[idx, 3]
+        # 領域の外接矩形の角座標を入手
+        x0 = stats[idx, 0]
+        y0 = stats[idx, 1]
+        x1 = x0 + stats[idx, 2]
+        y1 = y0 + stats[idx, 3]
 
-    # 長方形描画 (引数 : 描画画像、 長方形の左上角、 長方形の右下角、 色(BGR)、 線の太さ)
-    cv2.rectangle(src, (x0, y0), (x1, y1), (0, 0, 255), 5)
+        # 長方形描画 (引数 : 描画画像、 長方形の左上角、 長方形の右下角、 色(BGR)、 線の太さ)
+        cv2.rectangle(src, (x0, y0), (x1, y1), (0, 0, 255), 5)
 
-    # 領域の重心座標、サイズを表示 (引数 : 描画画像、 書き込む文字列、 書き込む座標、 フォント、 サイズ、 色、 太さ)
-    cv2.putText(
-        src,
-        "Center X: " + str(int(centroids[idx, 0])),
-        (x1 - 30, y1 + 15),
-        cv2.FONT_HERSHEY_PLAIN,
-        1,
-        (0, 255, 255),
-        2,
-    )
-    cv2.putText(
-        src,
-        "Center Y: " + str(int(centroids[idx, 1])),
-        (x1 - 30, y1 + 30),
-        cv2.FONT_HERSHEY_PLAIN,
-        1,
-        (0, 255, 255),
-        2,
-    )
-    cv2.putText(
-        src,
-        "Size: " + str(int(stats[idx, 4])),
-        (x1 - 30, y1 + 45),
-        cv2.FONT_HERSHEY_PLAIN,
-        1,
-        (0, 255, 255),
-        2,
-    )
+        # 領域の重心座標、サイズを表示 (引数 : 描画画像、 書き込む文字列、 書き込む座標、 フォント、 サイズ、 色、 太さ)
+        cv2.putText(
+            src,
+            "Center X: " + str(int(centroids[idx, 0])),
+            (x1 - 30, y1 + 15),
+            cv2.FONT_HERSHEY_PLAIN,
+            1,
+            (0, 255, 255),
+            2,
+        )
+        cv2.putText(
+            src,
+            "Center Y: " + str(int(centroids[idx, 1])),
+            (x1 - 30, y1 + 30),
+            cv2.FONT_HERSHEY_PLAIN,
+            1,
+            (0, 255, 255),
+            2,
+        )
+        cv2.putText(
+            src,
+            "Size: " + str(int(stats[idx, 4])),
+            (x1 - 30, y1 + 45),
+            cv2.FONT_HERSHEY_PLAIN,
+            1,
+            (0, 255, 255),
+            2,
+        )
 
-    """
-    ここから少し工夫をしてアプリ化
-    ボールをスタジアムに配置する
-    """
-    # ボールの配置位置の中心座標をラベリング結果の重心座標で指定
-    idx_h = int(centroids[idx, 1])
-    idx_w = int(centroids[idx, 0])
+        """
+        ここから少し工夫をしてアプリ化
+        ボールをスタジアムに配置する
+        """
+        # ボールの配置位置の中心座標をラベリング結果の重心座標で指定
+        idx_h = int(centroids[idx, 1])
+        idx_w = int(centroids[idx, 0])
 
-    # ボールがスタジアムからはみ出す時、位置を調整
-    if idx_h < ball_h:
-        idx_h = ball_h
-    elif idx_h >= stadium_img.shape[0] - ball_h:
-        idx_h = stadium_img.shape[0] - ball_h - 1
-    if idx_w < ball_w:
-        idx_w = ball_w
-    elif idx_w >= stadium_img.shape[1] - ball_w:
-        idx_w = stadium_img.shape[1] - ball_w - 1
+        # ボールがスタジアムからはみ出す時、位置を調整
+        if idx_h < ball_h:
+            idx_h = ball_h
+        elif idx_h >= stadium_img.shape[0] - ball_h:
+            idx_h = stadium_img.shape[0] - ball_h - 1
+        if idx_w < ball_w:
+            idx_w = ball_w
+        elif idx_w >= stadium_img.shape[1] - ball_w:
+            idx_w = stadium_img.shape[1] - ball_w - 1
 
-    # ボールの再配置
-    stadium = copy.deepcopy(stadium_img)
-    stadium[
-        (idx_h - ball_h) : (idx_h + ball_h), (idx_w - ball_w) : (idx_w + ball_w)
-    ] = ball_img
+        # ボールの再配置
+        stadium = copy.deepcopy(stadium_img)
+        stadium[
+            (idx_h - ball_h) : (idx_h + ball_h), (idx_w - ball_w) : (idx_w + ball_w)
+        ] = ball_img
 
     # 結果画像の表示
     cv2.imshow("labeling", src)
