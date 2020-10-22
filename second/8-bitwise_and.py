@@ -6,7 +6,7 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 
-shizuku = cv2.imread("./shizuku.png")
+shizuku = cv2.imread("./image_data/shizuku.png")
 H, W, C = shizuku.shape
 
 # 組み込みたい画像のマスク画像を生成
