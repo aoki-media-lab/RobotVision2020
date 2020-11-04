@@ -8,9 +8,11 @@ import numpy as np
 # 移動度が閾値(threshold)を超えた場合のみボールを動かす(目安 : Version1→30, Version2→100)
 # ボールを一回に何ピクセル動かすか(move_distance)
 # 詳しくはスライドの(補足 : オプティカルフローをどう判断するか?)を参照
-flow_usage = "Version1"
+flow_usage = "Version"
 threshold = 30
 move_distance = 10
+# flow_usageが正しく設定されていない終了(エラー回避)
+assert flow_usage in ["Version1", "Version2"]
 
 # Webカメラ設定
 cap = cv2.VideoCapture(0)
@@ -86,7 +88,6 @@ while True:
         good_first = feature_first[status == 1]
         good_next = feature_next[status == 1]
 
-
         """
         フローの結果をどのように利用するか(flow_usage)で分岐
         Version1 → 最大の移動度を持つ特徴点を基にボールを移動
@@ -121,7 +122,11 @@ while True:
 
                 # 前フレームと後フレームを繋ぐ線を描画
                 flow_mask = cv2.line(
-                    flow_mask, (next_x, next_y), (first_x, first_y), color[i].tolist(), 2
+                    flow_mask,
+                    (next_x, next_y),
+                    (first_x, first_y),
+                    color[i].tolist(),
+                    2,
                 )
 
                 # 現在の特徴点のところに丸（大きな点）を描画
@@ -152,7 +157,6 @@ while True:
             else:
                 print("・")
 
-
         # Version2
         elif flow_usage == "Version2":
             # 全特徴点の移動度の合計を保持する変数
@@ -172,7 +176,11 @@ while True:
 
                 # 前フレームと後フレームを繋ぐ線を描画
                 flow_mask = cv2.line(
-                    flow_mask, (next_x, next_y), (first_x, first_y), color[i].tolist(), 2
+                    flow_mask,
+                    (next_x, next_y),
+                    (first_x, first_y),
+                    color[i].tolist(),
+                    2,
                 )
 
                 # 現在の特徴点のところに丸（大きな点）を描画
@@ -202,7 +210,6 @@ while True:
                     print("←")
             else:
                 print("・")
-
 
         """
         5-labelingapp.pyと同様のアプリ化

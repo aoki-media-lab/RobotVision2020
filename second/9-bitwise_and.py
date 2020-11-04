@@ -3,7 +3,7 @@ Reference:
 http://labs.eecs.tottori-u.ac.jp/sd/Member/oyamada/OpenCV/html/py_tutorials/py_core/py_image_arithmetics/py_image_arithmetics.html
 """
 
-#ライブラリのインポート
+# ライブラリのインポート
 import cv2
 
 cap = cv2.VideoCapture(0)
