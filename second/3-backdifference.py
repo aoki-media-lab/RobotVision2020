@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 
-# 　ノイズ処理用のカーネルを定義
+# ノイズ処理用のカーネルを定義
 kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
 
 # 今回はサンプル動画(.avi形式)を用いて背景差分を抽出
