@@ -8,7 +8,7 @@ import numpy as np
 # 移動度が閾値(threshold)を超えた場合のみボールを動かす(目安 : Version1→30, Version2→100)
 # ボールを一回に何ピクセル動かすか(move_distance)
 # 詳しくはスライドの(補足 : オプティカルフローをどう判断するか?)を参照
-flow_usage = "Version"
+flow_usage = "Version1"
 threshold = 30
 move_distance = 10
 # flow_usageが正しく設定されていない終了(エラー回避)
