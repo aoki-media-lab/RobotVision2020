@@ -17,14 +17,14 @@ while True:
 
     # スクショがあるなら差分を出力
     if screenshot:
-        # 背景差分のクラスを定義(リセット)       
+        # 背景差分のクラスを定義(リセット)
         fgbg = cv2.bgsegm.createBackgroundSubtractorMOG()
         """
         3-backdifference.py では毎フレーム差分をとっていた(fgbg.apply)が、今回はphotoとframeの2回だけ。
         つまりphotoとframeの２フレームの直接的な差分をとっている。（画像間差分）
         """
-        # 背景画像(スクショ)
-        fgmask = fgbg.apply(photo)
+        # 背景画像を指定(スクショ)
+        background = fgbg.apply(photo)
         # 差分画像(カメラの入力フレーム)
         fgmask = fgbg.apply(frame)
         cv2.imshow("flow", fgmask)
