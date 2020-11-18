@@ -84,9 +84,11 @@ while True:
             gray_first, gray_next, feature_first, None, **lk_params
         )
 
-        # オプティカルフローを検出した特徴点を選別（0：検出せず、1：検出した）
-        good_first = feature_first[status == 1]
-        good_next = feature_next[status == 1]
+        # 特徴点の移動を検出できた場合
+        if feature_next is not None:
+            # オプティカルフローを検出した特徴点を選別（0：検出せず、1：検出した）
+            good_first = feature_first[status == 1]
+            good_next = feature_next[status == 1]
 
         """
         フローの結果をどのように利用するか(flow_usage)で分岐
