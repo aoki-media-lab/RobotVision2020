@@ -35,11 +35,14 @@ while True:
     # 結果画像の表示
     cv2.imshow("output", stadium_copy)
 
+    # ボールを一回で動かす距離(ピクセル数)を決定
+    x = 10
+
     # 終了オプション
     k = cv2.waitKey(1)
     if k == ord("q"):
         break
+    # -----------以下記述-----------
 
 
-cap.release()
 cv2.destroyAllWindows()

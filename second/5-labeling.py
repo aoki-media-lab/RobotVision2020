@@ -18,8 +18,8 @@ while True:
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # HSVによる上限、下限の設定　 ([Hue, Saturation, Value])
-    hsvLower = np.array([0, 0, 0])  # 下限
-    hsvUpper = np.array([30, 150, 150])  # 上限
+    hsvLower = np.array([0, 60, 60])  # 下限
+    hsvUpper = np.array([40, 255, 255])  # 上限
 
     # HSVからマスクを作成
     hsv_mask = cv2.inRange(hsv, hsvLower, hsvUpper)
