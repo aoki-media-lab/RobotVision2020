@@ -37,10 +37,9 @@ while True:
 
     # ラベリング処理
     nlabels, labels, stats, centroids = cv2.connectedComponentsWithStats(blur_mask)
-    print(labels)
 
     # 領域(stats[:, 4])が3つ以上ある場合(そのうち1つは背景)だけ処理
-    if len(stats[:, 4]) >= 3:
+    if nlabels >= 3:
         # 面積でソート(今回は面積が上位２つの領域を利用)
         top_idx = stats[:, 4].argsort()[-3:-1]
 
