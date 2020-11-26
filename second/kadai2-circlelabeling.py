@@ -46,7 +46,7 @@ while True:
         print(labels)
 
         # 領域(stats[:, 4])が２つ以上ある場合(そのうち1つは背景)だけ処理
-        if len(stats[:, 4]) >= 2:
+        if nlabels >= 2:
             # 面積でソート、　今回は最も大きい領域１つだけ利用
             idx = stats[:, 4].argsort()[-2]
 
